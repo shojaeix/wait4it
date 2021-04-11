@@ -1,4 +1,4 @@
-name: Wait4it CI
+name: Wait4it Build and Publish
 
 on:
   push:
