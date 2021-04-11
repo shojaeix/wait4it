@@ -1,0 +1,23 @@
+name: Wait4it CI
+
+on: [ 'push']
+
+jobs:
+ test-redis:
+  # You must use a Linux environment when using service containers or container jobs
+  runs-on: ubuntu-latest
+  container: golang:1.16-alpine3.13
+
+  # Service containers to run with `runner-job`
+  services:
+   # Label used to access the service container
+   redis:
+    # Docker Hub image
+    image: redis
+
+  steps:
+   - uses: actions/checkout@v2
+   - name: build the app
+     run: go run main.go build
+   - name: run the redis check
+     run: ./wait4it -type=redis -p=6379 -t=30 -h=redis
